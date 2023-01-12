@@ -46,6 +46,7 @@ class PrometheusFastApiPusher:
         self,
         app: FastAPI,
         prometheus_host: str,
+        job_name: str
     ):
         app.add_middleware(
             PrometheusFastApiPusherMiddleware,
@@ -82,7 +83,7 @@ class PrometheusFastApiPusher:
         @app.on_event("startup")
         @repeat_every(seconds=60)
         def metrics() -> None:
-            push_to_gateway(prometheus_host, job='awsl', registry=registry)
+            push_to_gateway(prometheus_host, job=job_name, registry=registry)
 
         return self
 
