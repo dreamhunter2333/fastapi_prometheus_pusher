@@ -16,7 +16,7 @@ app = FastAPI()
 async def startup():
     FastApiPusher(
         excluded_handlers="health_check"
-    ).start(app, "localhost:9091", "awsl")
+    ).start(app, "localhost:9091", "awsl"，repeat_seconds=10)
 ```
 
 ## ref

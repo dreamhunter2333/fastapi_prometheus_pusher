@@ -46,7 +46,8 @@ class PrometheusFastApiPusher:
         self,
         app: FastAPI,
         prometheus_host: str,
-        job_name: str
+        job_name: str,
+        repeat_seconds: int = 60
     ):
         app.add_middleware(
             PrometheusFastApiPusherMiddleware,
@@ -81,7 +82,7 @@ class PrometheusFastApiPusher:
             registry = REGISTRY
 
         @app.on_event("startup")
-        @repeat_every(seconds=60)
+        @repeat_every(seconds=repeat_seconds)
         def metrics() -> None:
             push_to_gateway(prometheus_host, job=job_name, registry=registry)
 
